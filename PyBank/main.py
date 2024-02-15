@@ -1,13 +1,14 @@
 import os
 import csv
 
+#obtain file path and read in CSV
 file_path = "Resources/budget_data.csv"
 PyBank_results = "PyBank_results.txt"
 
 with open(file_path, 'r', encoding='utf-8') as file:
     csv_reader = csv.reader(file, delimiter=',')
     header_row = next(csv_reader)  # Skip the header row
-
+    #initialize variables
     total_months = 0
     total = 0
     previous_value = None
@@ -17,6 +18,7 @@ with open(file_path, 'r', encoding='utf-8') as file:
     greatest_inc = 0
     inc_month = ""
     dec_month = ""
+    #parse through csv
     for row in csv_reader:
         total_months += 1
         try:
@@ -38,6 +40,7 @@ with open(file_path, 'r', encoding='utf-8') as file:
         except (ValueError, IndexError):
             continue
     avg_change = round(total_change / amount_of_changes, 2)
+    #print out results to terminal
     print(f"Financial Analysis")
     print(f"----------------------------")
     print(f"Total Months: {total_months}")
@@ -45,7 +48,7 @@ with open(file_path, 'r', encoding='utf-8') as file:
     print(f"Average Change: ${avg_change}")
     print(f"Greatest Increase in Profits: {inc_month} (${greatest_inc})")
     print(f"Greatest Decrease in Profits: {dec_month} (${greatest_dec})")
-    
+    #store results in a text file
     with open(PyBank_results, 'w') as output_file:
         output_file.write("Financial Analysis\n")
         output_file.write(f"----------------------------\n")
