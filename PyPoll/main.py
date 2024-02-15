@@ -17,11 +17,13 @@ with open(file_path, encoding='utf-8') as file:
     for row in csv_reader:
         total_votes += 1
         candidate_name = row[2]
-        if candidate_name in candidates_votes:
-            candidates_votes[candidate_name] += 1
-        else:
-            candidates_votes[candidate_name] = 1
-        
+        try:
+            if candidate_name in candidates_votes:
+                candidates_votes[candidate_name] += 1
+            else:
+                candidates_votes[candidate_name] = 1
+        except (ValueError, IndexError):
+            continue
     winner = max(candidates_votes, key=candidates_votes.get)
     
     print(f"Election Results")
